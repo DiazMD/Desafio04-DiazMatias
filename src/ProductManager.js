@@ -3,7 +3,7 @@ import fs from "fs";
 class ProductManager {
     
     constructor(){
-        this.path= "Products.json"
+        this.path= "/Products.json"
     }
 
     async getProducts(queryObj = {}){
@@ -19,7 +19,7 @@ class ProductManager {
             }
         }
         catch (error) {
-            return error
+            throw new Error(error.message)
         }
     }
 
@@ -29,7 +29,7 @@ class ProductManager {
         const product = products.find (p => p.id === id)
         return product
         } catch (error) {
-            return error
+            throw new Error(error.message)
         }
     }
 
@@ -59,7 +59,7 @@ class ProductManager {
             return newProduct;
         }
         catch (error) {
-            return error
+            throw new Error(error.message)
         }
     }
 
@@ -77,7 +77,7 @@ class ProductManager {
             await fs.promises.writeFile(this.path, JSON.stringify(products))
             return updateProduct;
         } catch (error) {
-            return error
+            throw new Error(error.message)
         }
     }
     
@@ -91,7 +91,7 @@ class ProductManager {
             }
             return product
         } catch (error) {
-            error
+            throw new Error(error.message)
         }
     }
 }
