@@ -21,7 +21,7 @@ router.get("/:idProduct", async (req, res) => {
     try {
         const product = await productManager.getProductById(+idProduct)
         if (!product) {
-            res
+            return res
             .status(404)
             .json({message: "Product not found with the id provided"})
         }
@@ -49,7 +49,7 @@ router.delete("/:idProduct", async (req, res) => {
     try {
         const response = await productManager.deleteProduct(+idProduct)
         if (!response) {
-            res
+           return res
             .status(404)
             .json({message: "Product not found with the id provided"})
         }

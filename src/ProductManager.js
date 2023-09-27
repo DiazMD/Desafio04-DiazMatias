@@ -64,13 +64,11 @@ class ProductManager {
 
     async updateProduct(id, obj){
         try{
-            const products = await this.getProducts({});
+            const products = await this.getProducts();
             const productIndex = products.findIndex(p => p.id === id)
-
             if(productIndex === -1) {
-                return `Error: Element ID ${id} not found`
+                return null
             }
-
             const updateProduct = {...products[productIndex], ...obj}
             products.splice(productIndex, 1, updateProduct)
             await fs.promises.writeFile(this.path, JSON.stringify(products))
@@ -88,7 +86,7 @@ class ProductManager {
                 const newArrayProducts = products.filter(p => p.id !== id)
                 await fs.promises.writeFile(this.path, JSON.stringify(newArrayProducts))
             }
-            return product
+            return null
         } catch (error) {
             throw new Error(error.message)
         }

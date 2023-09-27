@@ -26,7 +26,7 @@ class CartsManager {
     async getCartsById(id){
         try {
         const carts = await this.getCarts()
-        const cart = carts.find (p => p.id === id)
+        const cart = carts.find(c => c.id === id)
         return cart
         } catch (error) {
             throw new Error(error.message)
@@ -54,15 +54,38 @@ class CartsManager {
     }
 
     async addProductToCart(idCart, idProduct){
-        const cart = await this.getCartsById(idCart)
-        //Validacion de existencia de carrito
-        if(!cart){
-            throw new Error("There is no cart with this id")
+        const carts = await this.getCarts();
+        const stockProduct = await productManager.getProductById(idProduct)
+        
+        const getCartById = carts.find(cart => cart.id === idCart);
+        const product = getCartById.products.find(p => p.productId === idProduct);
+
+        if(!getCartById || !stockProduct){
+            return false
         }
-        //Validacion de existencia de producto
+    
+        if (product) {
+          product.quantity++;
+        } else {
+          getCartById.products.push({ productId: idProduct, quantity: 1 });
+        }
+    
+        await fs.promises.writeFile(this.path, JSON.stringify(carts));
+        return getCartById.products;
+    }
+
+}
+
+export const cartsManager = new CartsManager()
+
+
+
+//Primer codigo del addProductToCart, no encontre el error del grabado. Si usted lo ve y me lo puede decir para quedarme tranquilo de entenderlo se lo agradezco.
+/*const cart = await this.getCartsById(idCart)
         const product = await productManager.getProductById(idProduct)
-        if(!product){
-            throw new Error("There is no product with this id")
+        //Validacion de existencia de carrito y producto
+        if(!cart || !product){
+            return false
         }
         const producIndex = cart.products.findIndex(p => p.id === idProduct)
         if(producIndex === -1){
@@ -70,9 +93,7 @@ class CartsManager {
             cart.products.push(newProduct)
         } else {
             cart.products[producIndex].quantity++;
+            return cart.products
         }
-    }
-
-}
-
-export const cartsManager = new CartsManager()
+        await fs.promises.writeFile(this.path, JSON.stringify(cart))
+        return cart.products*/
