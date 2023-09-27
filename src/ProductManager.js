@@ -3,11 +3,10 @@ import fs from "fs";
 class ProductManager {
     
     constructor(){
-        this.path= "/Products.json"
+        this.path= "./Products.json"
     }
 
     async getProducts(queryObj = {}){
-        console.log("QueryObj", queryObj);
         const {limit} = queryObj
         try {
             if(fs.existsSync(this.path)){
@@ -25,11 +24,11 @@ class ProductManager {
 
     async getProductById(id){
         try {
-        const products = await this.getProducts()
-        const product = products.find (p => p.id === id)
+        const products = await this.getProducts();
+        const product = products.find (p => p.id === id);
         return product
         } catch (error) {
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 
@@ -53,7 +52,7 @@ class ProductManager {
             } else {
                 id = products[products.length-1].id+1
             }
-            const newProduct = {id, ...product}
+            const newProduct = {id, ...product, status: true}
             products.push(newProduct)
             await fs.promises.writeFile(this.path, JSON.stringify(products))
             return newProduct;
@@ -65,7 +64,7 @@ class ProductManager {
 
     async updateProduct(id, obj){
         try{
-            const products = await this.getProducts({})
+            const products = await this.getProducts({});
             const productIndex = products.findIndex(p => p.id === id)
 
             if(productIndex === -1) {
@@ -84,7 +83,7 @@ class ProductManager {
     async deleteProduct(id){
         try {
             const products = await this.getProducts();
-            const product = products.find( p => p.id === id)
+            const product = products.find( p => p.id === id);
             if (product) {
                 const newArrayProducts = products.filter(p => p.id !== id)
                 await fs.promises.writeFile(this.path, JSON.stringify(newArrayProducts))
@@ -96,4 +95,4 @@ class ProductManager {
     }
 }
 
-export const manager = new ProductManager()
+export const productManager = new ProductManager()
