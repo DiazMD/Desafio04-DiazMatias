@@ -1,0 +1,45 @@
+<h2>Admin products</h2>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+
+<p>Insert your new product</p>
+
+<form id="form">
+Title: <input type="text" name="title" id="title">
+Description: <input type="text" name="description" id="description">
+Price: <input type="text" name="price" id="price">
+Thumbnail: <input type="text" name="thumbnail" id="thumbnail">
+Code: <input type="text" name="code" id="code">
+Category: <input type="text" name="category" id="category">
+Stock: <input type="text" name="stock" id="stock">
+<input type="submit" value="SEND">
+</form>
+
+<hr> <hr>
+
+<p>Insert ID of the product to delete</p>
+
+<form id="formDelete">
+ID: <input type="number" name="idDelete" id="idDelete">
+<input type="submit" value="SEND">
+</form>
+
+<hr> <hr>
+<h3>All products:</h3>
+<div id="divRealTimeProduct">
+</div>
+
+
+<!-- A futuro se va a poder editar cada propiedad del producto
+<form id="formEdit">
+    New Title: <input type="text" name="title" id="title">
+    New Description: <input type="text" name="description" id="description">
+    New Price: <input type="text" name="price" id="price">
+    New Thumbnail: <input type="text" name="thumbnail" id="thumbnail">
+    New Code: <input type="text" name="code" id="code">
+    New Category: <input type="text" name="category" id="category">
+    New Stock: <input type="text" name="stock" id="stock">
+    <input type="submit" value="Send">
+</form>
+<hr>-->

@@ -33,7 +33,7 @@ router.get("/:idProduct", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    const {title, description, price, thumbnail, code, category, stock} = req.body;
+    const {title, description, price, code, category, stock} = req.body;
     if (!title || !description || !price || !code || !category || !stock){
         return res.status(400).json({ message: "Some data is missing"})}
      try {
@@ -73,5 +73,19 @@ router.put("/:idProduct", async (req, res) => {
         res.status(500).json({message:error.message})
     }
 });
+
+//
+/*
+router.post("/realTimeProducts", async(req, res) => {
+    const {title, description, price, thumbnail, code, category, stock} = req.body
+    if (!title || !description || !price || !thumbnail || !code || !category || !stock){
+        return res.status(400).json({ message: "Some data is missing"})}
+     try {
+        const newProduct = await productManager.addProduct(req.body);
+        res.redirect(`/api/views/realTimeProducts`)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+})*/
 
 export default router
