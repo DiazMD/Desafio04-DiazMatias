@@ -28,6 +28,7 @@ const httpServer = app.listen(PORT, () => {
 })
 
 const socketServer = new Server(httpServer)
+const messages = []
 
 // Connection - Disconnect
 socketServer.on("connection", async (socket) => {
@@ -48,6 +49,16 @@ socketServer.on("connection", async (socket) => {
     const producto = await productManager.deleteProduct(+idDelete);
     const listUpdated = await productManager.getProducts();
     socket.emit("productDeleted", listUpdated);
+    });
+
+
+    socket.on("newUser", (user) => {
+        socket.broadcast.emit("userConnected", user);
+    });
+
+    socket.on("message", (infoMessage) => {
+        messages.push(infoMessage)
+        socketServer.emit("chat", messages)
     });
 
     socket.on("disconnect", () => {

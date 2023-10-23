@@ -19,7 +19,7 @@ const updatedProducts = (products) => {
   
     products.forEach((product) => {
       html += `
-               
+                <div class="productCard">
                 <h3>titulo: ${product.title}</h3>
                 <p>descripcion: ${product.description}</p>
                 <p>precio: ${product.price}</p>
@@ -29,6 +29,7 @@ const updatedProducts = (products) => {
                 <p>thumbnails: ${product.thumbnails}</p>
                 <p>id: ${product.id}</p>
                 <br></br>
+                <div>
         
             `;
       divRealTimeProduct.innerHTML = html;
@@ -52,7 +53,6 @@ form.onsubmit = (e) => {
     socketClient.emit("addProduct", {
         title,
         description,
-        status,
         price,
         code,
         stock,
