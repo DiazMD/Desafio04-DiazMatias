@@ -6,6 +6,8 @@ import { __dirname } from "./utils.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import { productManager } from "./ProductManager.js"
+//db connection
+import "./db/configDB.js";
 
 const app = express()
 const PORT = 8080;

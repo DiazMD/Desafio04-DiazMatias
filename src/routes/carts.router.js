@@ -1,8 +1,40 @@
 import { Router } from "express";
-import { cartsManager } from "../CartsManager.js";
+//import { cartsManager } from "../CartsManager.js";
+import { cartsManager } from "../dao/CartsManagerDB.js";
 
 const router = Router();
 
+router.get("/:idCart", async(req, res) => {
+    const { idCart } = req.params
+    try {
+    const cart = await cartsManager.findCartById(idCart);
+    res.status(200).json({cart})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
+
+router.post("/:idCart/products/:idProduct", async(req, res) => {
+    const { idCart, idProduct } = req.params
+    try {
+    const cart = await cartsManager.addProductToCart(idCart, idProduct);
+    res.status(200).json({cart})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
+
+router.post("/", async(req, res) => {
+    try {
+    const cart = await cartsManager.createCart();
+    res.status(200).json({cart})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
+
+
+/*FS
 router.post("/", async (req, res) => {
     try {
         const newCart = await cartsManager.addCart();
@@ -43,5 +75,6 @@ router.post("/:idCart/product/:idProduct", async (req, res) => {
     }
     
 })
+*/
 
 export default router;
