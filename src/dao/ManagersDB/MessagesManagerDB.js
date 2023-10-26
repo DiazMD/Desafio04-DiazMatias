@@ -1,4 +1,4 @@
-import { messagesModel } from "../db/models/messages.model.js";
+import { messagesModel } from "../models/messages.model.js";
 
 class MessagesManager {
     async findAll() {

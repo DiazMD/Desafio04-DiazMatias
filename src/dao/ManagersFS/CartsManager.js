@@ -96,4 +96,4 @@ export const cartsManager = new CartsManager()
             return cart.products
         }
         await fs.promises.writeFile(this.path, JSON.stringify(cart))
-        return cart.products
+        return cart.products*/

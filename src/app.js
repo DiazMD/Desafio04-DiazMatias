@@ -6,7 +6,7 @@ import { __dirname } from "./utils.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import { productManager } from "./dao/ManagersFS/ProductManager.js";
-import { messagesManager } from "./dao/MessagesManagerDB.js";
+import { messagesManager } from "./dao/ManagersDB/MessagesManagerDB.js";
 
 //db connection
 import "./db/configDB.js";
