@@ -33,6 +33,16 @@ router.post("/", async(req, res) => {
     }
 });
 
+router.delete("/:idCart", async(req, res) => {
+    const { idCart } = req.params
+    try {
+    await cartsManager.deleteCart(idCart);
+    res.status(200).json({message: "Product deleted"})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
+
 
 /*FS
 router.post("/", async (req, res) => {

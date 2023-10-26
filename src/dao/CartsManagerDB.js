@@ -19,10 +19,6 @@ class CartsManager {
             throw new Error(`El carrito con ID ${idCart} no existe`);
         }
 
-        if (!cart.products) {
-            cart.products = [];
-        }
-
         const productIndex = cart.products.findIndex(p => p.product === idProduct)
         if(productIndex === -1) {
             cart.products.push({product: idProduct, quantity: 1})
@@ -30,6 +26,11 @@ class CartsManager {
             cart.products[productIndex].quantity++;
         }
         return cart.save();
+    }
+
+    async deleteCart (id){
+        const response = await cartsModel.deleteOne({_id:id})
+        return response;
     }
 }
 

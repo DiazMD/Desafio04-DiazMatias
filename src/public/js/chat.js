@@ -4,15 +4,16 @@ const form = document.getElementById("chatForm")
 const inputMessage = document.getElementById("message")
 const divChat = document.getElementById("chat")
 
+
 let user;
 
 Swal.fire({
     title: 'Welcome!',
-    text: 'What is your name?',
+    text: 'Insert your email',
     input: "text",
     inputValidator: (value) => {
         if (!value) {
-            return "Name is required";
+            return "Email is required";
         }
     },
     confirmButtonText: 'Enter'
@@ -24,7 +25,7 @@ Swal.fire({
     socketClient.emit("newUser", user)
   });
 
-  socketClient.on("userConnected", user => {
+  socketClient.on("userConnected", (user) => {
     Toastify({
         text: `${user} connected`,
         className: "info",
@@ -35,19 +36,19 @@ Swal.fire({
       }).showToast();
   })
 
-  form.onsubmit = (e) => {
+  form.onsubmit = async (e) => {
     e.preventDefault();
     const infoMessage = {
-        name: user,
+        email: user,
         message: inputMessage.value,
     };
-    inputMessage.innerText = "";
     socketClient.emit("message", infoMessage)
+    form.reset()
   }
 
   socketClient.on("chat", (messages) => {
     const chat = messages.map(m => {
-        return `<p>${m.name}: ${m.message}</p>`;
+        return `<p>${m.email}: ${m.message}</p>`;
     })
     .join(" ")
     divChat.innerHTML = chat;

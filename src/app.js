@@ -5,7 +5,9 @@ import viewsRouter from "./routes/views.router.js"
 import { __dirname } from "./utils.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
-import { productManager } from "./ProductManager.js"
+import { productManager } from "./dao/ManagersFS/ProductManager.js";
+import { messagesManager } from "./dao/MessagesManagerDB.js";
+
 //db connection
 import "./db/configDB.js";
 
@@ -61,6 +63,12 @@ socketServer.on("connection", async (socket) => {
     socket.on("message", (infoMessage) => {
         messages.push(infoMessage)
         socketServer.emit("chat", messages)
+    });
+
+    socket.on("message", async(infoMessage) => {
+        await messagesManager.createOne(infoMessage);
+        const allMessages = await messagesManager.findAll()
+        socketServer.emit("chat", allMessages)
     });
 
     socket.on("disconnect", () => {
