@@ -47,9 +47,12 @@ router.delete("/:idProduct", async (req, res) => {
 
 router.put("/:idProduct", async (req, res) => {
     const {idProduct} = req.params
+    const body = req.body
+
+    console.log(JSON.stringify(body))
 
     try {
-        await productsManager.updateOne(idProduct)
+        await productsManager.updateOne(idProduct, body)
         res.status(200).json({message: "Product updated"})
     } catch (error) {
         res.status(500).json({error: err.message})

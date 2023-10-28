@@ -19,7 +19,7 @@ class CartsManager {
             throw new Error(`El carrito con ID ${idCart} no existe`);
         }
 
-        const productIndex = cart.products.findIndex(p => p.product === idProduct)
+        const productIndex = cart.products.findIndex(p => p.product.equals(idProduct))
         if(productIndex === -1) {
             cart.products.push({product: idProduct, quantity: 1})
         } else {
